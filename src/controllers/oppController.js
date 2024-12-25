@@ -27,7 +27,7 @@ const getOpportunityById = async (req, res) => {
   }
 };
 const addOpportunity = async (req, res) => {
-  // console.log(req.body);
+   console.log(req.body);
 
   const data = req.body;
   const userId = req.user._id;
@@ -41,7 +41,7 @@ const addOpportunity = async (req, res) => {
     return res.status(404).send("Access Denied");
   }
   try {
-    const createdOpportunity = await oppService.createOpportunity(data,userId,user);
+    const createdOpportunity = await oppService.createOpportunity(data,userId);
 
     res.status(201).json(createdOpportunity);
   } catch (error) {
@@ -83,8 +83,7 @@ const getAllType = async (req, res) => {
   } catch (error) {
     res.status(400).send(error.message);
   }
-  
-};
+  };
 const getTotalSumOpportunity = async (req, res) => {
   try {
     const totalOpportunity= await oppService.getTotalOpportunitys();

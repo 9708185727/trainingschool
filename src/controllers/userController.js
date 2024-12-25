@@ -35,10 +35,11 @@ const userLog = async (req, res) => {
     const user = await authService.userLogin(userData);
     const token = createAuthToken(user);
     // console.log(authToken);
-    res.cookie("authToken", token, { httpOnly: true });
+    res.cookie("authToken", token);
     //  localStorage.setItem('key',data);//use in local browser stroage for large storage
+      // res.send("user login successfully");
     res.status(201).json({ ...user, token });
-    // res.send("user login successfully");
+  
   } catch (error) {
     res.status(500).send(error.message);
   }

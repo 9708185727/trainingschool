@@ -1,7 +1,7 @@
 
 import Opportunity from "../models/Opp.js";
-const createOpportunity= async (data,userId,user) => {
-  return await Opportunity.create({...data, createdBy:userId,participants:user});
+const createOpportunity= async (data,userId) => {
+  return await Opportunity.create({...data, createdBy:userId});
 
 };
 const getOpportunity = async (query) => {

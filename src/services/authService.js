@@ -1,44 +1,45 @@
 import User from "../models/User.js";
-import  bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 const userCreate = async (data) => {
-   
-   
-const userExists = await User.findOne({ email: data.email });
+  // Check if user with the given email already exists
+  const userExists = await User.findOne({ email: data.email });
   if (userExists) throw new Error("User Email already exists");
-  const hashpassword=bcrypt.hashSync(data.password);
+
+  // Hash the user's password
+  const hashpassword = bcrypt.hashSync(data.password);
+
   try {
+
     return await User.create({
-        name:data.name,
-        email:data.email,
-        password:hashpassword,
-        role:data.role,
-       profile :data.profile,
-       
-      });
+      name: data.name,
+      email: data.email,
+      password: hashpassword,
+      role: data.role,
     
-  } 
-  
-  catch (error) {
-    console.log(error.message);
-
-    
+      profile: {
+        bio: data.profile?.bio || '', 
+         resume: typeof data.profile?.resume === 'string' ? data.profile.resume : '',
+        participationHistory: data.profile?.participationHistory || [], 
+      },
+    });
+  } catch (error) {
+    console.error(error.message);
+    throw new Error("Error creating user");
   }
-
 };
 
 const userLogin = async (data) => {
+  const userExisting = await User.findOne({ email: data.email });
 
-    const userExisting=  await User.findOne({email:data.email}) ;
+  if (!userExisting) throw new Error("user not exists");
+  const isMatch = bcrypt.compareSync(data.password, userExisting.password);
 
-if(!userExisting) throw new Error("user not exists");
-const isMatch=bcrypt.compareSync(data.password,userExisting.password);
-
-if(!isMatch){
+  if(!isMatch){
     throw  Error('password  doesnot match');
 }
    
-return userExisting;
 
+  return userExisting;
 };
 
 //getalldetails user
@@ -62,7 +63,7 @@ const getUserById = async (id) => {
   return await User.findById(id);
 };
 //to update details of user
-const getUserEdit= async (id, data) => {
+const getUserEdit = async (id, data) => {
   return await User.findByIdAndUpdate(id, data);
 };
 
@@ -72,5 +73,4 @@ export default {
   getUserDetails,
   getUserById,
   getUserEdit,
-  
 };
