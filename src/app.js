@@ -48,10 +48,10 @@ app.use("/api/submissions",sub)
 
 //GET – /api/notifications Fetch notifications for a user.
 //Reports
-app.use("/api/notifications",notification)
+// app.use("/api/notifications",notification)
 
 //GET /api/reports/opportunity-stats – Generate reports on participation.
-app.use("/api/reports/opportunity-stats",report)
+// app.use("/api/reports/opportunity-stats",report)
 
 
 app.listen(PORT, () => {
