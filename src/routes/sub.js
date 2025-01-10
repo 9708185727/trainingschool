@@ -9,10 +9,10 @@ const router = express.Router();
 
 
 // POST /api/submissions – Submit a file for an opportunity.
-router.post('/',auth,addSubmission)
+router.post('/',addSubmission)
 
 // GET /api/submissions – List all submissions (Recruiter/Admin).
-router.get('/',auth,getAllSubmission,
+router.get('/',getAllSubmission,
 )
 
 // GET /api/submissions/:id – View specific submission details.

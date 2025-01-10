@@ -1,13 +1,13 @@
 import subService from "../services/subService.js";
 import mongoose from "mongoose";
 const getAllSubmission = async (req, res) => {
-  const user = req.user;
-  console.log(user)
+  // const user = req.user;
+  // console.log(user)
 
   try {
-    if (!user.role.includes("Admin")&&!user.role.includes("Recruiter")) {
-      return res.status(404).send("Access Denied");
-    }
+    // if (!user.role.includes("Admin")&&!user.role.includes("Recruiter")) {
+    //   return res.status(404).send("Access Denied");
+    // }
     const getData = await subService.getSubmission(req.query);
     res.status(201).json(getData);
     console.log(req.query);
@@ -42,9 +42,9 @@ const addSubmission = async (req, res) => {
   if (!data.fileUrl) return res.status(422).send("Submission fileUrl is required.");
 
   // Restrict certain roles
-  if (user.role.includes("Admin") && user.role.includes("Recruiter")) {
-    return res.status(403).send("Access Denied.");
-  }
+  // if (user.role.includes("Admin") && user.role.includes("Recruiter")) {
+  //   return res.status(403).send("Access Denied.");
+  // }
 
   try {
     // Example: Fetch the opportunity associated with the request

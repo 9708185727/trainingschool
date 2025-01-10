@@ -9,17 +9,15 @@ const userCreate = async (data) => {
   const hashpassword = bcrypt.hashSync(data.password);
 
   try {
-
     return await User.create({
       name: data.name,
       email: data.email,
       password: hashpassword,
       role: data.role,
-    
       profile: {
-        bio: data.profile?.bio || '', 
-         resume: typeof data.profile?.resume === 'string' ? data.profile.resume : '',
-        participationHistory: data.profile?.participationHistory || [], 
+        bio: data.profile?.bio || '',
+        resume: data.profile?.resume || '', // Ensure this is correctly set
+        participationHistory: data.profile?.participationHistory || [],
       },
     });
   } catch (error) {

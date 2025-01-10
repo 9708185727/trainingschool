@@ -32,7 +32,7 @@ const deleteOpportunityById = async (id) => {
   return await Opportunity.findByIdAndDelete(id);
 };
 
-const getTotalOpportunitys=async ()=>{
+const getTotalOpportunity=async ()=>{
   return await Opportunity.countDocuments();
 }
 export default {
@@ -42,5 +42,5 @@ export default {
   updateOpportunityById,
   deleteOpportunityById,
   getTypes,
-  getTotalOpportunitys,
+  getTotalOpportunity,
 };

@@ -10,12 +10,13 @@ import cookieParser from "cookie-parser";
 import cors from "cors"
 import report from "./routes/report.js";
 import notification from "./routes/notification.js"
+
 const app = express();
 app.use(logger);
 //parser application
-
+app.use(express.static('uploads'))
 app.use(express.json());
-
+app.use(express.urlencoded({extended:false}))
 dotenv.config();
 connectDB();
 app.use(cookieParser());

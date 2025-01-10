@@ -52,12 +52,12 @@ const updateOpportunity = async (req, res) => {
   const id = req.params.id;
   const data = req.body;
   const user = req.user;
-  console.log(user)
+  // console.log(user)
 
   try {
     const Opportunity = await oppService.getOpportunityById(id);
     if (!Opportunity) return res.status(404).send("Opportunity not Found");
-    if (Opportunity.createdBy !=user._id&& !user.role.includes("Admin")&&user.role.includes("Participant")) {
+    if (Opportunity.createdBy !=user._id&& !user.role.includes("Admin")) {
       return res.status(404).send("Access Denied");
     }
     const updatedOpportunity = await oppService.updateOpportunityById(id, data);
@@ -78,7 +78,7 @@ const deleteOpportunity = async (req, res) => {
 };
 const getAllType = async (req, res) => {
   try {
-    const _type= await oppService.getCategories();
+    const _type= await oppService.getTypes();
     res.status(201).json(_type);
   } catch (error) {
     res.status(400).send(error.message);
@@ -86,7 +86,7 @@ const getAllType = async (req, res) => {
   };
 const getTotalSumOpportunity = async (req, res) => {
   try {
-    const totalOpportunity= await oppService.getTotalOpportunitys();
+    const totalOpportunity= await oppService.getTotalOpportunity();
     res.status(201).json(totalOpportunity);
   } catch (error) {
     res.status(500).send(error.message);

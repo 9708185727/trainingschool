@@ -5,12 +5,14 @@ import authService from "../services/authService.js";
 
 const userRegister = async (req, res) => {
   const userData = req.body;
-  console.log(userData)
+  console.log(req.file); // Check the uploaded file object
+  console.log(userData); // Check the user data
+
   if (!userData.name) return res.status(422).send("required data name");
   if (!userData.email) return res.status(422).send("required data email");
   if (!userData.password) return res.status(422).send("required data password");
   if (!userData.role) return res.status(422).send("required role ");
-
+  
   if (userData.password !== userData.confirmPassword) {
     return res.status(400).send("password and confirm password doesnot match");
   }
@@ -18,11 +20,22 @@ const userRegister = async (req, res) => {
     return res.status(400).send("password must greater than 8");
   }
 
+  // Handle file upload
+  const resumeFile = req.file ? req.file.path : null; // Store file path if available
+
+  const profileData = {
+    bio: userData.bio || '', // Ensure bio is present
+    resume: resumeFile || '', // Use file path if available
+    participationHistory: userData.participationHistory ? [userData.participationHistory] : [], // Ensure it's an array
+  };
+
   try {
-    const userAdd = await authService.userCreate(userData);
+    const userAdd = await authService.userCreate({
+      ...userData,
+      profile: profileData, // Pass profile data
+    });
 
     const token = createAuthToken(userAdd);
-    // console.log(authToken);
     res.status(201).json({ ...userAdd, token });
   } catch (error) {
     res.status(400).send(error.message);
