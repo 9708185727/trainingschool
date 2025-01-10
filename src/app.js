@@ -20,9 +20,9 @@ app.use(express.urlencoded({extended:false}))
 dotenv.config();
 connectDB();
 app.use(cookieParser());
-app.use(cors({
- origin:process.env.APP_URL,
-}))
+// app.use(cors({
+//  origin:process.env.APP_URL,
+// }))
 const PORT=process.env.PORT;
 
 app.get("/", (req, res) => {
@@ -48,13 +48,13 @@ app.use("/api/submissions",sub)
 
 //GET – /api/notifications Fetch notifications for a user.
 //Reports
-// app.use("/api/notifications",notification)
+app.use("/api/notifications",notification)
 
 //GET /api/reports/opportunity-stats – Generate reports on participation.
-// app.use("/api/reports/opportunity-stats",report)
+app.use("/api/reports/opportunity-stats",report)
 
 
 app.listen(PORT, () => {
-  console.log("server running at port 5000");
+  console.log(`server running at port ${PORT}`);
 });
 
