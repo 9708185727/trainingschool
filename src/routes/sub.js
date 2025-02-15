@@ -3,13 +3,11 @@
 import express from "express";
 import auth from "../middlewares/auth.js";
 import { getAllSubmission,addSubmission,getSubmissionById,getTotalSumSubmission,updateSubmission } from '../controllers/subController.js'
+import upload from "../middlewares/uploads.js";
 
 const router = express.Router();
-
-
-
 // POST /api/submissions – Submit a file for an opportunity.
-router.post('/',addSubmission)
+router.post('/',auth,upload.single('file'),addSubmission)
 
 // GET /api/submissions – List all submissions (Recruiter/Admin).
 router.get('/',getAllSubmission,
